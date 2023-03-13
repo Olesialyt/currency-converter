@@ -1,0 +1,102 @@
+:root *::-webkit-scrollbar {
+  width: 0.5rem;
+  background: #0d141f;
+  border-radius: 0 0.5rem 0.5rem;
+}
+:root *::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  background: rgba(116, 116, 123, 0.8);
+  -webkit-box-shadow: inset 0 0 6px rgba(42, 42, 42, 0.5);
+}
+:root *::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.selected {
+  background: #2f3640;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: #f5f6fa;
+  position: relative;
+}
+.selected::after {
+  content: "";
+  background: url(/arrow.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  position: absolute;
+  height: 100%;
+  width: 1.5rem;
+  right: 0.5rem;
+  top: 1.2rem;
+
+  transition: all 0.4s;
+}
+
+.select-box {
+  display: flex;
+  width: 25rem;
+  flex-direction: column;
+  position: relative;
+}
+
+.select-box .option-container {
+  background: #2f3640;
+  color: #f5f6fa;
+  max-height: 0;
+  width: 100%;
+  opacity: 0;
+  transition: all 0.4s;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  min-height: 0;
+  opacity: 0;
+}
+
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  -ms-appearance: none;
+}
+.select-box .option,
+.selected {
+  padding: 1.8rem;
+  cursor: pointer;
+}
+.select-box .option:hover {
+  background-color: #414b57;
+}
+.select-box label {
+  cursor: pointer;
+}
+.select-box .option .radio {
+  display: none;
+}
+
+.select-box .option-container.active {
+  max-height: 14.1rem;
+  opacity: 1;
+  overflow-y: scroll;
+}
+
+/* .rotateArrow{
+  transform: rotate(180deg);
+  top: -1.2rem;
+} */
+
+.search-box input{
+  width: 22.6rem;
+  height:  3.5rem;
+  /* padding: 0.75rem 1rem; */
+  font-size: 1rem;
+  position: absolute;
+  border-radius: 0.5rem 0.5rem 0 0.5rem;
+  z-index: 100;
+  border: 0.5rem solid #2f3640;
+}
+.search-box input:focus {
+  outline: none;
+}

@@ -1,16 +1,12 @@
-const optionContainer = document.querySelector(".option-container");
-const addText = document.getElementById("select");
-const fromContainer = document.querySelector(".from-container");
-const toContainer = document.querySelector(".to-container");
-const selected = document.querySelector('.selected');
+const fromCurrency = document.querySelector('[name="from_currency"]');
+const toCurrency = document.querySelector('[name="to_currency"]');
+const form = document.querySelector(".app form");
 
-
-const memory = {};
-
-// const endpoint = "https://api.exchangeratesapi.oi/latest";
-console.log(select);
+const textResultAmount = document.querySelector(".to_amount");
+const ratesByBase = {};
 
 const currencies = {
+  "Select Currecy": "",
   USD: "United States Dollar",
   AUD: "Australian Dollar",
   BGN: "Bulgarian Lev",
@@ -45,43 +41,18 @@ const currencies = {
   EUR: "Euro",
 };
 
-function generateOptions(option) {
-  let index = 0;
-  return Object.entries(option).forEach(([key, value]) => {
-    /////change id declaration.....
-    const options = `
-    <div class="option" id=${index} name=${key}>
-      <input type="radio" class="currencies" name=${key}>
-      <label for="currencies" name=${key}>${key} - ${value}</label>
-    </div>
-    `;
-    index++;
-    optionContainer.insertAdjacentHTML("beforeend", options);
-  });
+////найти рейт добавить в обьект и после умножить на данную сумму
+
+function generateOptions(options) {
+  return Object.entries(options)
+    .map(
+      ([currencyKey, currencyValue]) =>
+        `<option value="${currencyKey}">${currencyKey} - ${currencyValue}</option>`
+    )
+    .join("");
 }
 
-const optionsDisplay = generateOptions(currencies);
-console.log(optionsDisplay);
-
-// toContainer.addEventListener("click", event => {
-//   const clickedElement = event.target;
-//   const key = clickedElement.getAttribute("name");
-
-//   const text = clickedElement.textContent;
-//   console.log(key);
-
-//   select.innerHTML = text;
-// });
-//////////////////////////////////////
-let from = "";
-fromContainer.addEventListener("click", event => {
-  const clickedElement = event.target;
-  from = clickedElement.getAttribute("name");
-  const text = clickedElement.textContent;
-
-  select.innerHTML = text;
-});
-
+/////
 async function fetchExchangeRateData(to, from, amount) {
   const requestOptions = {
     method: "GET",
@@ -97,25 +68,45 @@ async function fetchExchangeRateData(to, from, amount) {
       requestOptions
     );
     const data = await response.json();
+    console.log(data);
     const result = data.result;
-    return result;
+    const toDisplay = formatCurrency(to, result);
+    resultAmount(toDisplay);
+    ///call a func
+    // resultAmount(result);
   } catch (error) {
     console.log("error", error);
   }
 }
-
-///(to, from, amount)
-fetchExchangeRateData("USD", "EUR", 100);
-
-function convert(to, from, amount) {
-  if (!memory[from]) {
-    console.log("oh no");
+let from = "";
+let to = "";
+let amount = "";
+function handleInput(e) {
+  if (e.target.name === "from_currency") {
+    from = e.target.value;
+  } else if (e.target.name === "to_currency") {
+    to = e.target.value;
+  } else if (e.target.name === "from_amount") {
+    amount = e.target.value;
   }
-  // const data = await fetchExchangeRateData(from);
+  if (to && from && amount) {
+    fetchExchangeRateData(to, from, amount);
+  }
 }
 
-selected.addEventListener("click", () => {
-  optionContainer.classList.toggle("active");
-  // selectedArrow.style.transform = 'rotate(180deg)';
-  // selectedArrow.style.top = '-1.2rem';
-})
+function formatCurrency(to, amount) {
+  return Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: to,
+  }).format(amount);
+}
+
+function resultAmount(result) {
+  textResultAmount.innerHTML = result;
+}
+const optionsDisplay = generateOptions(currencies);
+
+fromCurrency.innerHTML = optionsDisplay;
+toCurrency.innerHTML = optionsDisplay;
+
+form.addEventListener("input", handleInput);

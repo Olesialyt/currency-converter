@@ -5,71 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Currency Converter</title>
     <link rel="stylesheet" href="./money.css" />
-    <link rel="stylesheet" href="./wrapper.css" />
   </head>
 
   <body>
-    <div class="wrapper">
-      <div class="conteiner">
-        <header>Currency Converter</header>
-
-        <div class="amount">
-          <p>Enter Amount</p>
-          <input type="text" value="1" />
-        </div>
-        <div class="from">
-          <p>From</p>
-          <div class="search-box">
-            <input type="text" placeholder="Start typing..." />
-          </div>
-          <div class="select-box">
-            <div class="selected" id="select"></div>
-            <div class="from-container option-container"><!-- active --></div>
-          </div>
-        </div>
-        <div class="to">
-          <p>To</p>
-          <div class="select-box">
-            <div class="selected" id="select1"></div>
-            <div class="option-container active"><!-- active --></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- <form action="#">
-       
-        <div class="drop-list">
-         
-          <div class="to">
-            <p>To</p>
-            <div class="select-box">
-              <img src="https://flagcdn.com/48x36/np.png" alt="flag">
-              <select>  </select>
-            </div>
-          </div>
-        </div>
-        <div class="exchange-rate">Getting exchange rate...</div>
-        <button>Get Exchange Rate</button>
+    <div class="app">
+      <form>
+        <input type="number" name="from_amount" />
+        <select id="from_currency" name="from_currency">
+          <option>Select a Currency</option>
+        </select>
+        <p>in</p>
+        <select id="to_currency" name="to_currency">
+          <option>Select a Currency</option>
+        </select>
+        <p>is</p>
+        <p class="to_amount">$0</p>
       </form>
     </div>
-    <script src="js/country-list.js"></script>
-    <script src="js/script.js"></script> -->
-
-    <!-- <div class="app">
-    <form>
-      <input type="number" name="from_amount">
-      <select name="from_currency">
-        <option>Select a Currency</option>
-      </select>
-      <p>in</p>
-      <select name="to_currency">
-        <option>Select a Currency</option>
-      </select>
-      <p>is</p>
-      <p class="to_amount">$0</p>
-    </form>
-  </div> -->
     <script src="./money.js"></script>
   </body>
 </html>
